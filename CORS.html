@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <script>
+            fetch("https://example.com/api", {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    body: JSON.stringify({ name: "Alice", age: 25 })
+})
+  .then((response) => response.json()) // Parse the response as JSON
+  .then((data) => console.log(data)) // Do something with the data
+  .catch((error) => console.error(error)); // Handle errors
+        </script>
+    </body>
+</html>
+
+https://bitbucket.org/gateway/api/gasv3/api/v1/batch
